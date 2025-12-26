@@ -1,0 +1,28 @@
+{
+  "headers": {
+    "metric": "指标",
+    "storage_cabinet": "存储柜",
+    "table": "桌子",
+    "refrigerator": "冰箱",
+    "dishwasher": "洗碗机",
+    "oven": "烤箱",
+    "washing_machine": "洗衣机",
+    "microwave": "微波炉"
+  },
+  "rows": [
+    {
+      "metric": "CD $\\downarrow$",
+      "storage_cabinet": "0.369 ± 0.173",
+      "table": "0.489 ± 0.441",
+      "refrigerator": "0.154 ± 0.121",
+      "dishwasher": "0.199 ± 0.092",
+      "oven": "0.673 ± 0.382",
+      "washing_machine": "0.419 ± 0.209",
+      "microwave": "0.311 ± 0.228"
+    }
+  ],
+  "footer": {
+    "note": "* 数据来源：基于 PartNet-Mobility 数据集的定量结果。"
+  }
+}
+
