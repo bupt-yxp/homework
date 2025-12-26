@@ -1,0 +1,36 @@
+{
+  "headers": {
+    "metric": "测试指标",
+    "tablet": "平板电脑 (10211)",
+    "stapler": "订书机 (103111)",
+    "washer": "洗衣机 (103776)",
+    "average": "平均值"
+  },
+  "rows": [
+    {
+      "metric": "静态部件准确率 (acc-s)",
+      "tablet": "100.00%",
+      "stapler": "100.00%",
+      "washer": "100.00%",
+      "average": "100.00%"
+    },
+    {
+      "metric": "可动部件准确率 (acc-m)",
+      "tablet": "81.65%",
+      "stapler": "98.45%",
+      "washer": "98.45%",
+      "average": "92.85%"
+    },
+    {
+      "metric": "整体匹配准确率 (acc-w)",
+      "tablet": "90.83%",
+      "stapler": "99.22%",
+      "washer": "99.22%",
+      "average": "96.42%"
+    }
+  ],
+  "footer": {
+    "note": "* 数据来源：基于 PartNet-Mobility 数据集的定量结果。"
+  }
+}
+
