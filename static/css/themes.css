@@ -1,0 +1,332 @@
+/* 主题变量定义 */
+:root {
+  --theme-name: 'default';
+}
+
+/* 默认主题（当前风格） */
+[data-theme="default"] {
+  --hero-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --hero-card-bg: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+  --hero-card-border-top: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  --intro-bg: #ffffff;
+  --intro-card-bg: #f8f9fa;
+  --intro-card-border: #667eea;
+  --text-primary: #2c3e50;
+  --text-secondary: #555;
+  --navbar-bg: linear-gradient(135deg, #bdc5ff 0%, #c8bde0 100%);
+  --navbar-text: #2c3e50;
+  --navbar-hover: rgba(102, 126, 234, 0.15);
+  --dropdown-bg: #ffffff;
+  --dropdown-border: rgba(102, 126, 234, 0.3);
+  --dropdown-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 2px 10px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* 深色主题 */
+[data-theme="dark"] {
+  --hero-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  --hero-card-bg: linear-gradient(145deg, #2d2d44 0%, #1e1e2e 100%);
+  --hero-card-border-top: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
+  --intro-bg: #1a1a2e;
+  --intro-card-bg: #2d2d44;
+  --intro-card-border: #4a90e2;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --navbar-bg: linear-gradient(135deg, #2d3a5a 0%, #2a3d5e 100%);
+  --navbar-text: #e0e0e0;
+  --navbar-hover: rgba(74, 144, 226, 0.2);
+  --dropdown-bg: #2d2d44;
+  --dropdown-border: rgba(74, 144, 226, 0.4);
+  --dropdown-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* 蓝色主题 */
+[data-theme="blue"] {
+  --hero-bg: linear-gradient(135deg, #e3f2fd 0%, #90caf9 100%);
+  --hero-card-bg: linear-gradient(145deg, #ffffff 0%, #e3f2fd 100%);
+  --hero-card-border-top: linear-gradient(90deg, #2196f3 0%, #1976d2 100%);
+  --intro-bg: #ffffff;
+  --intro-card-bg: #e3f2fd;
+  --intro-card-border: #2196f3;
+  --text-primary: #1565c0;
+  --text-secondary: #424242;
+  --navbar-bg: linear-gradient(135deg, #90caf9 0%, #64b5f6 100%);
+  --navbar-text: #1565c0;
+  --navbar-hover: rgba(33, 150, 243, 0.15);
+  --dropdown-bg: #ffffff;
+  --dropdown-border: rgba(33, 150, 243, 0.3);
+  --dropdown-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
+  --card-shadow: 0 10px 40px rgba(33, 150, 243, 0.2), 0 2px 10px rgba(33, 150, 243, 0.1);
+  --card-shadow-hover: 0 6px 25px rgba(33, 150, 243, 0.3);
+}
+
+/* 绿色主题 */
+[data-theme="green"] {
+  --hero-bg: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+  --hero-card-bg: linear-gradient(145deg, #ffffff 0%, #e8f5e9 100%);
+  --hero-card-border-top: linear-gradient(90deg, #4caf50 0%, #388e3c 100%);
+  --intro-bg: #ffffff;
+  --intro-card-bg: #e8f5e9;
+  --intro-card-border: #4caf50;
+  --text-primary: #2e7d32;
+  --text-secondary: #424242;
+  --navbar-bg: linear-gradient(135deg, #a5d6a7 0%, #81c784 100%);
+  --navbar-text: #2e7d32;
+  --navbar-hover: rgba(76, 175, 80, 0.15);
+  --dropdown-bg: #ffffff;
+  --dropdown-border: rgba(76, 175, 80, 0.3);
+  --dropdown-shadow: 0 8px 16px rgba(76, 175, 80, 0.2);
+  --card-shadow: 0 10px 40px rgba(76, 175, 80, 0.2), 0 2px 10px rgba(76, 175, 80, 0.1);
+  --card-shadow-hover: 0 6px 25px rgba(76, 175, 80, 0.3);
+}
+
+/* 紫色主题 */
+[data-theme="purple"] {
+  --hero-bg: linear-gradient(135deg, #f3e5f5 0%, #ce93d8 100%);
+  --hero-card-bg: linear-gradient(145deg, #ffffff 0%, #f3e5f5 100%);
+  --hero-card-border-top: linear-gradient(90deg, #9c27b0 0%, #7b1fa2 100%);
+  --intro-bg: #ffffff;
+  --intro-card-bg: #f3e5f5;
+  --intro-card-border: #9c27b0;
+  --text-primary: #6a1b9a;
+  --text-secondary: #424242;
+  --navbar-bg: linear-gradient(135deg, #ce93d8 0%, #ba68c8 100%);
+  --navbar-text: #6a1b9a;
+  --navbar-hover: rgba(156, 39, 176, 0.15);
+  --dropdown-bg: #ffffff;
+  --dropdown-border: rgba(156, 39, 176, 0.3);
+  --dropdown-shadow: 0 8px 16px rgba(156, 39, 176, 0.2);
+  --card-shadow: 0 10px 40px rgba(156, 39, 176, 0.2), 0 2px 10px rgba(156, 39, 176, 0.1);
+  --card-shadow-hover: 0 6px 25px rgba(156, 39, 176, 0.3);
+}
+
+/* 应用主题变量 */
+.hero-section {
+  background: var(--hero-bg) !important;
+}
+
+.hero-card {
+  background: var(--hero-card-bg) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+
+.hero-card::before {
+  background: var(--hero-card-border-top) !important;
+}
+
+.intro-section {
+  background: var(--intro-bg) !important;
+}
+
+.intro-card {
+  background: var(--intro-card-bg) !important;
+  border-left-color: var(--intro-card-border) !important;
+  box-shadow: var(--card-shadow) !important;
+}
+
+.intro-card:hover {
+  box-shadow: var(--card-shadow-hover) !important;
+}
+
+/* 文本颜色 */
+.intro-section .title,
+.intro-section h2 {
+  color: var(--text-primary) !important;
+}
+
+.intro-section p,
+.intro-section .content {
+  color: var(--text-secondary) !important;
+}
+
+/* 导航栏背景和文本 */
+.navbar {
+  background: var(--navbar-bg) !important;
+}
+
+.navbar-item,
+.navbar-link {
+  color: var(--navbar-text) !important;
+}
+
+.navbar-item:hover,
+.navbar-link:hover {
+  background-color: var(--navbar-hover) !important;
+  color: var(--navbar-text) !important;
+}
+
+.navbar-item .icon svg,
+.navbar-link .icon svg {
+  fill: var(--navbar-text) !important;
+}
+
+/* 下拉菜单样式 */
+.navbar-dropdown {
+  background-color: var(--dropdown-bg) !important;
+  border: 1px solid var(--dropdown-border) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--dropdown-shadow) !important;
+  padding: 0.5rem 0 !important;
+  min-width: 200px !important;
+}
+
+.navbar-dropdown .navbar-item {
+  color: var(--text-primary) !important;
+  padding: 0.75rem 1.5rem !important;
+}
+
+.navbar-dropdown .navbar-item:hover {
+  background-color: var(--navbar-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* 深色主题下拉菜单文本颜色 */
+[data-theme="dark"] .navbar-dropdown .navbar-item {
+  color: var(--navbar-text) !important;
+}
+
+[data-theme="dark"] .navbar-dropdown .navbar-item:hover {
+  color: #ffffff !important;
+}
+
+/* 深色主题下的特殊处理 */
+[data-theme="dark"] body {
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .footer {
+  background-color: #1a1a2e;
+  color: #b0b0b0;
+}
+
+[data-theme="dark"] .footer a {
+  color: #4a90e2;
+}
+
+[data-theme="dark"] .publication-title,
+[data-theme="dark"] .title {
+  color: #e0e0e0 !important;
+}
+
+[data-theme="dark"] .subtitle {
+  color: #b0b0b0 !important;
+}
+
+/* 深色主题下主题选择器下拉菜单使用浅色背景 */
+[data-theme="dark"] #theme-selector-container .navbar-dropdown {
+  background-color: #ffffff !important;
+  border-color: rgba(74, 144, 226, 0.3) !important;
+}
+
+[data-theme="dark"] #theme-selector-container .navbar-dropdown .navbar-item {
+  color: #2c3e50 !important;
+}
+
+[data-theme="dark"] #theme-selector-container .navbar-dropdown .navbar-item:hover {
+  background-color: rgba(74, 144, 226, 0.1) !important;
+  color: #2c3e50 !important;
+}
+
+/* 主题选择器样式 */
+#theme-selector-container {
+  position: relative;
+}
+
+#theme-selector-container .navbar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#theme-selector-container .navbar-link .icon {
+  margin-right: 0;
+}
+
+/* 深色主题下主题选择器按钮的文字和图标颜色 */
+[data-theme="dark"] #theme-selector-container .navbar-link {
+  color: var(--navbar-text) !important;
+}
+
+[data-theme="dark"] #theme-selector-container .navbar-link .icon svg {
+  fill: var(--navbar-text) !important;
+}
+
+/* 深色主题下主题选择器按钮激活状态 - 使用深色文字和图标 */
+[data-theme="dark"] #theme-selector-container.is-active .navbar-link,
+[data-theme="dark"] #theme-selector-container.has-dropdown.is-active .navbar-link {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] #theme-selector-container.is-active .navbar-link .icon svg,
+[data-theme="dark"] #theme-selector-container.has-dropdown.is-active .navbar-link .icon svg {
+  fill: #2c3e50 !important;
+}
+
+/* 深色主题下，鼠标悬停在"主题"按钮上时，使用半透明背景（与其他主题一致） */
+[data-theme="dark"] #theme-selector-container .navbar-link:hover {
+  color: var(--navbar-text) !important;
+  background-color: var(--navbar-hover) !important;
+}
+
+[data-theme="dark"] #theme-selector-container .navbar-link:hover .icon svg {
+  fill: var(--navbar-text) !important;
+}
+
+/* 深色主题下，当下拉菜单打开时，"主题"按钮的文字和图标变为深色 */
+[data-theme="dark"] #theme-selector-container.has-dropdown.is-active .navbar-link {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] #theme-selector-container.has-dropdown.is-active .navbar-link .icon svg {
+  fill: #2c3e50 !important;
+}
+
+/* 深色主题下，当鼠标悬停在主题选项卡上时，"主题"按钮的文字和图标变为深色 */
+[data-theme="dark"] #theme-selector-container.dropdown-hovered .navbar-link {
+  color: #2c3e50 !important;
+  background-color: #ffffff !important;
+}
+
+[data-theme="dark"] #theme-selector-container.dropdown-hovered .navbar-link .icon svg {
+  fill: #2c3e50 !important;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.theme-option:hover {
+  background-color: #f5f5f5;
+}
+
+/* 深色主题下主题选项卡悬停颜色与"主题"按钮一致 */
+[data-theme="dark"] .theme-option:hover {
+  background-color: #ffffff !important;
+  color: #2c3e50 !important;
+}
+
+.theme-option.is-active {
+  background-color: #e8f4f8;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .theme-option.is-active {
+  background-color: #2d3a4a;
+}
+
+/* 确保下拉菜单在右侧 */
+#theme-selector-container .navbar-dropdown.is-right {
+  right: 0;
+  left: auto;
+}
+
