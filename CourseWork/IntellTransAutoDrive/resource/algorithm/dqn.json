@@ -1,0 +1,36 @@
+{
+  "title": "基于深度Q网络（DQN）的算法",
+  "description": "",
+  "initialization": "初始化动作价值网络（$Q$ 网络）参数 $\\theta$，目标网络参数 $\\theta^- \\leftarrow \\theta$。初始化经验回放池$D$，设定探索率 $\\epsilon$、折扣因子 $\\gamma$ 及批处理大小 $N$。",
+  "steps": [
+    {
+      "number": 1,
+      "condition": "<strong>交互与采样</strong>",
+      "actions": [
+        "在当前环境状态 $s_t$ 下，根据 $\\epsilon$-greedy 策略选择动作 $a_t$：",
+        "$$ a_t = \\begin{cases} \\text{随机选择动作}, & \\text{以概率 } \\epsilon \\\\ \\arg\\max_a Q(s_t, a; \\theta), & \\text{以概率 } 1-\\epsilon \\end{cases} $$",
+        "执行动作 $a_t$，获得奖励 $r_t$（包括车速奖励与碰撞惩罚）及下一状态 $s_{t+1}$。",
+        "将经验元组 $(s_t, a_t, r_t, s_{t+1})$ 存入经验回放池 $D$。"
+      ]
+    },
+    {
+      "number": 2,
+      "condition": "<strong>经验回放与网络更新</strong>",
+      "actions": [
+        "从 $D$ 中随机抽取 $N$ 组样本 $(s_i, a_i, r_i, s_{i+1})$。",
+        "计算目标值（Target $Q$）：",
+        "$$ y_i = \\begin{cases} r_i, & \\text{若 } s_{i+1} \\text{ 为终止状态} \\\\ r_i + \\gamma \\max_{a'} Q(s_{i+1}, a'; \\theta^-), & \\text{否则} \\end{cases} $$",
+        "通过最小化均方误差损失函数更新参数 $\\theta$：",
+        "$$ L(\\theta) = \\frac{1}{N} \\sum_i (y_i - Q(s_i, a_i; \\theta))^2 $$"
+      ]
+    },
+    {
+      "number": 3,
+      "condition": "<strong>目标网络同步</strong>",
+      "actions": [
+        "每隔固定步数 $C$，将当前网络参数同步至目标网络：$\\theta^- \\leftarrow \\theta$。",
+        "若未达到最大训练回合数，更新 $s_t \\leftarrow s_{t+1}$ 并转到 <strong>(1)</strong>；否则停止。"
+      ]
+    }
+  ]
+}

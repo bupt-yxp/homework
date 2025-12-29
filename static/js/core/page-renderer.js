@@ -398,6 +398,99 @@ const PageRenderer = {
   },
 
   /**
+   * 渲染实验卡片 Section（包含算法和视频的实验卡片）
+   * @param {Object} config - 实验配置 {title, description, algorithms: [{title, algorithmConfig}], videos: [{title, image, alt}]}
+   */
+  renderExperimentSection(config) {
+    if (!config) return '';
+    
+    const sectionClass = config.sectionClass || 'experiment-section';
+    const sectionStyle = config.sectionStyle || 'padding: 2rem 0;';
+    const titleStyle = config.titleStyle || 'margin-bottom: 2rem; color: #2c3e50;';
+    const columnClass = config.columnClass || 'is-10';
+    const cardPadding = '3rem 1rem'; // 上下3rem，左右1rem（非第一个卡片）
+    
+    // 渲染算法部分
+    let algorithmsHTML = '';
+    if (config.algorithms && Array.isArray(config.algorithms)) {
+      algorithmsHTML = config.algorithms.map(alg => {
+        const algorithmConfigStr = JSON.stringify(alg.algorithmConfig || {});
+        const containerId = alg.algorithmConfig?.containerId || `algorithm-${Math.random().toString(36).substr(2, 9)}`;
+        return `
+          <div style="margin-bottom: 3rem;">
+            <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; background: var(--subsection-bg, #e9ecef); border-radius: 4px;">
+              <h3 class="title is-4 has-text-centered" style="color: var(--text-primary, #2c3e50); margin-bottom: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                <span class="icon" style="font-size: 1rem; color: #667eea;">
+                  <i class="fas fa-code"></i>
+                </span>
+                <span>${alg.title || '算法'}</span>
+              </h3>
+            </div>
+            <div class="algorithm-container" id="${containerId}" data-algorithm-config='${algorithmConfigStr}'>
+              <div class="has-text-centered" style="padding: 2rem;">
+                <p>正在加载算法数据...</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+    
+    // 渲染视频部分
+    let videosHTML = '';
+    if (config.videos && Array.isArray(config.videos)) {
+      const itemColumnClass = config.videoColumnClass || (config.videos.length > 1 ? 'is-6' : 'is-12');
+      videosHTML = `
+        <div style="margin-top: 3rem;">
+          <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; background: var(--subsection-bg, #e9ecef); border-radius: 4px;">
+            <h3 class="title is-4 has-text-centered" style="color: var(--text-primary, #2c3e50); margin-bottom: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <span>可视化展示</span>
+            </h3>
+          </div>
+          <div class="columns is-multiline is-centered">
+            ${config.videos.map(video => `
+              <div class="column ${itemColumnClass}">
+                <div class="box" style="padding: 1rem; text-align: center; border: 1px solid #e8e8e8; transition: all 0.3s ease; border-radius: 6px; background: var(--intro-card-bg, #ffffff);">
+                  <figure class="image" style="margin-bottom: 1rem;">
+                    <img src="${video.image}" alt="${video.alt || video.title}" style="width: 100%; height: auto; border-radius: 6px;">
+                  </figure>
+                  <h4 class="title is-5" style="margin-top: 0.5rem; color: var(--text-primary, #2c3e50); font-weight: 500;">${video.title}</h4>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+    
+    // 描述文本
+    let descriptionHTML = '';
+    if (config.description) {
+      descriptionHTML = `
+        <p style="margin-bottom: 2.5rem; color: #555; line-height: 1.8; font-size: 1rem;">${config.description}</p>
+      `;
+    }
+    
+    return `
+<!-- ${config.title || 'Experiment'} Section -->
+<section class="section ${sectionClass}" style="${sectionStyle}">
+  <div class="container is-max-desktop">
+    <div class="intro-card" style="padding: ${cardPadding} !important;">
+      <h2 class="title is-3 has-text-centered" style="${titleStyle}">${config.title}</h2>
+      <div class="columns is-centered">
+        <div class="column ${columnClass}">
+          ${descriptionHTML}
+          ${algorithmsHTML}
+          ${videosHTML}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+    `;
+  },
+
+  /**
    * 根据页面配置渲染整个页面
    * @param {Object} pageConfig - 页面配置对象
    */
@@ -438,6 +531,9 @@ const PageRenderer = {
           break;
         case 'algorithm':
           html += this.renderAlgorithmSection(section);
+          break;
+        case 'experiment':
+          html += this.renderExperimentSection(section);
           break;
         default:
           console.warn(`未知的section类型: ${section.type}`);

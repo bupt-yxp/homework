@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../../static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="../../static/css/index.css">
   <link rel="stylesheet" href="../../static/css/themes.css">
+  <link rel="stylesheet" href="../../static/css/mathjax-contextmenu.css">
   <script>
     // 立即应用保存的主题，避免闪烁（必须在页面渲染前执行）
     (function() {
@@ -31,6 +32,16 @@
   <!-- 页面渲染系统 -->
   <script src="../../static/js/core/page-renderer.js"></script>
   <script src="./static/js/intelltransautodrive-page-config.js"></script>
+  <!-- 算法可视化器 -->
+  <script src="../../static/js/components/algorithm-visualizer.js"></script>
+  <!-- MathJax for LaTeX rendering -->
+  <script src="../../static/js/utils/mathjax.js"></script>
+  <script>
+    // 初始化 MathJax，自动渲染算法容器
+    MathJaxUtils.init({
+      autoRenderSelectors: ['.algorithm-content']
+    });
+  </script>
 
 </head>
 <body>

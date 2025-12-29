@@ -1,0 +1,56 @@
+{
+  "title": "基于注意力机制的近端策略优化（PPO with Attention）算法",
+  "description": "",
+  "initialization": "初始化注意力特征提取网络参数 $\\psi$、策略网络（Actor）参数 $\\theta$ 和价值网络（Critic）参数 $\\phi$。设定超参数：剪切系数 $\\epsilon$、折扣因子 $\\gamma$、优势估计参数 $\\lambda$、更新周期 $T$、注意力头数 $H=2$、特征维度 $d=64$。",
+  "steps": [
+    {
+      "number": 1,
+      "condition": "<strong>轨迹采集</strong>",
+      "actions": [
+        "对于时间步 $t = 1, 2, \\ldots, T$：",
+        "获取原始状态 $s_t$（序列形式：自车特征 $s_t^{ego}$ 及周围车辆特征 $\\{s_t^i\\}_{i=1}^{n}$）",
+        "<strong>注意力特征提取</strong>：",
+        "(a) 嵌入层：将每个车辆特征映射到 $d$ 维空间",
+        "$$e_t^{ego} = \\text{Embedding}(s_t^{ego})  \\qquad  e_t^i = \\text{Embedding}(s_t^i)$$",
+        "(b) 生成查询、键、值矩阵：",
+        "$$Q_t = W_Q e_t^{ego} \\qquad K_t = W_K [e_t^{ego}; \\{e_t^i\\}] \\qquad V_t = W_V [e_t^{ego}; \\{e_t^i\\}]$$",
+        "(c) 多头注意力计算（$h=1, \\ldots, H$）：",
+        "$$\\text{Attn}_h(Q_t, K_t, V_t) = \\text{softmax}\\left(\\frac{Q_t^h (K_t^h)^T}{\\sqrt{d/H}}\\right) V_t^h$$",
+        "(d) 特征聚合：",
+        "$$ \\tilde{s}_t = \\text{Concat}(\\{\\text{Attn}_h\\}_{h=1}^H) + e_t^{ego} $$",
+        "基于增强特征 $\\tilde{s}_t$，采样动作 $a_t \\sim \\pi_{\\theta}(\\cdot|\\tilde{s}_t)$",
+        "执行动作，获得奖励 $r_t$ 和下一状态 $s_{t+1}$",
+        "记录轨迹：$(\\tilde{s}_t, a_t, r_t, \\pi_{\\theta}(a_t|\\tilde{s}_t))$"
+      ]
+    },
+    {
+      "number": 2,
+      "condition": "<strong>优势估计</strong>",
+      "actions": [
+        "计算每个时间步的奖励总和（Returns）$\\hat{R}_t = \\sum_{k=0}^{T-t} \\gamma^k r_{t+k}$。",
+        "基于价值网络 $V_{\\phi}(\\tilde{s}_t)$，利用广义优势估计（GAE）计算优势函数 $\\hat{A}_t$：",
+        "$$ \\delta_t = r_t + \\gamma V_{\\phi}(\\tilde{s}_{t+1}) - V_{\\phi}(\\tilde{s}_t) \\qquad \\hat{A}_t = \\sum_{k=0}^{T-t} (\\gamma \\lambda)^k \\delta_{t+k} $$"
+      ]
+    },
+    {
+      "number": 3,
+      "condition": "<strong>网络参数更新</strong>",
+      "actions": [
+        "计算概率比率 $r_t(\\theta) = \\frac{\\pi_{\\theta}(a_t|\\tilde{s}_t)}{\\pi_{\\theta_{old}}(a_t|\\tilde{s}_t)}$。",
+        "通过最大化剪切目标函数更新策略网络参数 $\\theta$：",
+        "$$ L^{CLIP}(\\theta) = \\mathbb{E}_t \\left[ \\min(r_t(\\theta) \\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_t) \\right] $$",
+        "通过最小化均方误差更新价值网络参数 $\\phi$：",
+        "$$ L^{VF}(\\phi) = \\mathbb{E}_t \\left[ (V_{\\phi}(\\tilde{s}_t) - \\hat{R}_t)^2 \\right] $$",
+        "联合更新注意力网络参数 $\\psi$（通过策略和价值网络的梯度反向传播）。"
+      ]
+    },
+    {
+      "number": 4,
+      "condition": "<strong>迭代</strong>",
+      "actions": [
+        "更新旧策略参数 $\\theta_{old} \\leftarrow \\theta$。",
+        "重复步骤 <strong>(1)</strong> 至 <strong>(3)</strong> 直至算法收敛。"
+      ]
+    }
+  ]
+}

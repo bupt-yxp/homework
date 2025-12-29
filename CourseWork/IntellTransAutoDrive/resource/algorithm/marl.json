@@ -1,0 +1,50 @@
+{
+  "title": "基于注意力机制的多智能体深度Q网络（Multi-Agent DQN with Attention）的算法",
+  "description": "",
+  "initialization": "初始化共享的动作价值网络（$Q$ 网络）参数 $\\theta$，目标网络参数 $\\theta^- \\leftarrow \\theta$。初始化共享经验回放池 $D$，设定探索率 $\\epsilon$、折扣因子 $\\gamma$ 及批处理大小 $N$。初始化 $M$ 个智能体（车辆），每个智能体 $i \\in \\{1, 2, \\ldots, M\\}$ 共享同一 $Q$ 网络。初始化注意力机制：自车嵌入层、他车嵌入层及多头注意力层（$H=2$ 个注意力头）。",
+  "steps": [
+    {
+      "number": 1,
+      "condition": "<strong>多智能体观察与注意力编码</strong>",
+      "actions": [
+        "对于每个智能体 $i$，获取观察 $o_t^i = [s_{\\text{ego}}^i, s_{\\text{others}}^i]$，其中 $s_{\\text{ego}}^i$ 为自车状态，$s_{\\text{others}}^i = [s_1, s_2, \\ldots, s_K]$ 为其他 $K$ 辆车的状态。",
+        "通过嵌入层编码：",
+        "$$\\mathbf{e}_{\\text{ego}}^i = \\text{Embed}_{\\text{ego}}(s_{\\text{ego}}^i) \\qquad \\mathbf{e}_{\\text{others}}^i = \\text{Embed}_{\\text{others}}(s_{\\text{others}}^i)$$",
+        "使用多头注意力机制计算加权特征：",
+        "$$ \\mathbf{h}^i = \\text{MultiHeadAttention}(\\mathbf{e}_{\\text{ego}}^i, \\mathbf{e}_{\\text{others}}^i, H=2) $$",
+        "注意力权重 $\\alpha_{jk}^i$ 表示智能体 $i$ 对第 $j$ 个注意力头中第 $k$ 辆车的关注程度。"
+      ]
+    },
+    {
+      "number": 2,
+      "condition": "<strong>多智能体动作选择</strong>",
+      "actions": [
+        "对于每个智能体 $i$，根据 $\\epsilon$-greedy 策略选择动作 $a_t^i$：",
+        "$$ a_t^i = \\begin{cases} \\text{随机选择动作}, & \\text{以概率 } \\epsilon \\\\ \\arg\\max_a Q(\\mathbf{h}^i, a; \\theta), & \\text{以概率 } 1-\\epsilon \\end{cases} $$",
+        "所有智能体同时执行动作 $\\mathbf{a}_t = [a_t^1, a_t^2, \\ldots, a_t^M]$，获得联合奖励 $\\mathbf{r}_t = [r_t^1, r_t^2, \\ldots, r_t^M]$",
+        "（包括车速奖励、碰撞惩罚及多智能体协调奖励）及下一观察 $\\mathbf{o}_{t+1} = [o_{t+1}^1, o_{t+1}^2, \\ldots, o_{t+1}^M]$。",
+        "将每个智能体的经验元组 $(o_t^i, a_t^i, r_t^i, o_{t+1}^i)$ 存入共享经验回放池 $D$。"
+      ]
+    },
+    {
+      "number": 3,
+      "condition": "<strong>经验回放与网络更新</strong>",
+      "actions": [
+        "从 $D$ 中随机抽取 $N$ 组样本 $\\{(o_i^j, a_i^j, r_i^j, o_{i+1}^j)\\}_{j=1}^N$（可能来自不同智能体）。",
+        "对于每个样本 $j$，通过注意力网络编码得到 $\\mathbf{h}_i^j$ 和 $\\mathbf{h}_{i+1}^j$。",
+        "计算目标值（Target $Q$）：",
+        "$$ y_i^j = \\begin{cases} r_i^j, & \\text{若 } o_{i+1}^j \\text{ 为终止状态} \\\\ r_i^j + \\gamma \\max_{a'} Q(\\mathbf{h}_{i+1}^j, a'; \\theta^-), & \\text{否则} \\end{cases} $$",
+        "通过最小化均方误差损失函数更新参数 $\\theta$：",
+        "$$ L(\\theta) = \\frac{1}{N} \\sum_{j=1}^N (y_i^j - Q(\\mathbf{h}_i^j, a_i^j; \\theta))^2 $$"
+      ]
+    },
+    {
+      "number": 4,
+      "condition": "<strong>目标网络同步</strong>",
+      "actions": [
+        "每隔固定步数 $C$，将当前网络参数同步至目标网络：$\\theta^- \\leftarrow \\theta$。",
+        "若未达到最大训练回合数，更新 $\\mathbf{o}_t \\leftarrow \\mathbf{o}_{t+1}$ 并转到 <strong>(1)</strong>；否则停止。"
+      ]
+    }
+  ]
+}

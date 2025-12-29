@@ -113,8 +113,46 @@ const AlgorithmVisualizer = {
       // 动作列表
       if (step.actions && Array.isArray(step.actions)) {
         stepsHTML += '<div class="step-actions">';
-        step.actions.forEach(action => {
-          stepsHTML += `<div class="step-action">${action}</div>`;
+        step.actions.forEach((action, index) => {
+          const trimmedAction = action.trim();
+          // 检测是否为子步骤标记（以 (a), (b), (c), (d) 等开头）
+          const isSubStepMarker = /^\([a-z]\)/.test(trimmedAction);
+          // 检测是否为公式行（以 $ 开头）
+          const isFormula = /^\$/.test(trimmedAction);
+          // 检测前一个action
+          const prevAction = index > 0 ? step.actions[index - 1].trim() : '';
+          const prevIsSubStepMarker = /^\([a-z]\)/.test(prevAction);
+          const prevIsFormula = /^\$/.test(prevAction);
+          // 检测前两个action（用于判断是否还在子步骤范围内）
+          const prevPrevAction = index > 1 ? step.actions[index - 2].trim() : '';
+          const prevPrevIsSubStepMarker = /^\([a-z]\)/.test(prevPrevAction);
+          
+          let actionClass = 'step-action';
+          let actionStyle = '';
+          
+          // 判断是否需要缩进
+          let shouldIndent = false;
+          
+          if (isSubStepMarker) {
+            // 子步骤标记本身需要缩进
+            shouldIndent = true;
+          } else if (prevIsSubStepMarker) {
+            // 紧跟在子步骤标记后面的内容需要缩进
+            shouldIndent = true;
+          } else if (prevIsFormula && (prevPrevIsSubStepMarker || prevIsSubStepMarker)) {
+            // 如果前一行是公式，且再前一行是子步骤标记，当前行也需要缩进
+            shouldIndent = true;
+          } else if (isFormula && prevIsSubStepMarker) {
+            // 如果当前行是公式，且前一行是子步骤标记，需要缩进
+            shouldIndent = true;
+          }
+          
+          if (shouldIndent) {
+            actionClass += ' step-action-indented';
+            actionStyle = 'padding-left: 2rem;';
+          }
+          
+          stepsHTML += `<div class="${actionClass}" style="${actionStyle}">${action}</div>`;
         });
         stepsHTML += '</div>';
       }

@@ -1,0 +1,44 @@
+{
+  "title": "基于近端策略优化（PPO）的算法",
+  "description": "",
+  "initialization": "初始化策略网络（Actor）参数 $\\theta$ 和价值网络（Critic）参数 $\\phi$。设定超参数：剪切系数 $\\epsilon$、折扣因子 $\\gamma$、优势估计参数 $\\lambda$ 及更新周期 $T$。",
+  "steps": [
+    {
+      "number": 1,
+      "condition": "<strong>轨迹采集</strong>",
+      "actions": [
+        "使用当前策略 $\\pi_{\\theta}$ 在 Racetrack 环境中运行 $T$ 个时间步。",
+        "记录状态 $s_t$、动作 $a_t$、奖励 $r_t$ 及动作概率 $\\pi_{\\theta}(a_t|s_t)$，构成轨迹集合。"
+      ]
+    },
+    {
+      "number": 2,
+      "condition": "<strong>优势估计</strong>",
+      "actions": [
+        "计算每个时间步的奖励总和（Returns）$\\hat{R}_t$。",
+        "基于价值网络 $V_{\\phi}(s_t)$，利用广义优势估计（GAE）计算优势函数 $\\hat{A}_t$：",
+        "$$ \\delta_t = r_t + \\gamma V_{\\phi}(s_{t+1}) - V_{\\phi}(s_t) $$",
+        "$$ \\hat{A}_t = \\sum_{k=0}^{T-t} (\\gamma \\lambda)^k \\delta_{t+k} $$"
+      ]
+    },
+    {
+      "number": 3,
+      "condition": "<strong>策略与价值网络更新</strong>",
+      "actions": [
+        "计算概率比率 $r_t(\\theta) = \\frac{\\pi_{\\theta}(a_t|s_t)}{\\pi_{\\theta_{old}}(a_t|s_t)}$。",
+        "通过最大化剪切目标函数更新策略网络参数 $\\theta$：",
+        "$$ L^{CLIP}(\\theta) = \\mathbb{E}_t \\left[ \\min(r_t(\\theta) \\hat{A}_t, \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon) \\hat{A}_t) \\right] $$",
+        "通过最小化均方误差更新价值网络参数 $\\phi$：",
+        "$$ L^{VF}(\\phi) = \\mathbb{E}_t \\left[ (V_{\\phi}(s_t) - \\hat{R}_t)^2 \\right] $$"
+      ]
+    },
+    {
+      "number": 4,
+      "condition": "<strong>迭代</strong>",
+      "actions": [
+        "更新旧策略参数 $\\theta_{old} \\leftarrow \\theta$。",
+        "重复步骤 <strong>(1)</strong> 至 <strong>(3)</strong> 直至算法收敛。"
+      ]
+    }
+  ]
+}

@@ -10,6 +10,7 @@
   --hero-card-border-top: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
   --intro-bg: #ffffff;
   --intro-card-bg: #f8f9fa;
+  --subsection-bg: #dee2e6;
   --intro-card-border: #667eea;
   --text-primary: #2c3e50;
   --text-secondary: #555;
@@ -30,6 +31,7 @@
   --hero-card-border-top: linear-gradient(90deg, #4a90e2 0%, #357abd 100%);
   --intro-bg: #1a1a2e;
   --intro-card-bg: #2d2d44;
+  --subsection-bg: #3a3a54;
   --intro-card-border: #4a90e2;
   --text-primary: #e0e0e0;
   --text-secondary: #b0b0b0;
@@ -50,6 +52,7 @@
   --hero-card-border-top: linear-gradient(90deg, #2196f3 0%, #1976d2 100%);
   --intro-bg: #ffffff;
   --intro-card-bg: #e3f2fd;
+  --subsection-bg: #bbdefb;
   --intro-card-border: #2196f3;
   --text-primary: #1565c0;
   --text-secondary: #424242;
@@ -70,6 +73,7 @@
   --hero-card-border-top: linear-gradient(90deg, #4caf50 0%, #388e3c 100%);
   --intro-bg: #ffffff;
   --intro-card-bg: #e8f5e9;
+  --subsection-bg: #c8e6c9;
   --intro-card-border: #4caf50;
   --text-primary: #2e7d32;
   --text-secondary: #424242;
@@ -90,6 +94,7 @@
   --hero-card-border-top: linear-gradient(90deg, #9c27b0 0%, #7b1fa2 100%);
   --intro-bg: #ffffff;
   --intro-card-bg: #f3e5f5;
+  --subsection-bg: #e1bee7;
   --intro-card-border: #9c27b0;
   --text-primary: #6a1b9a;
   --text-secondary: #424242;
