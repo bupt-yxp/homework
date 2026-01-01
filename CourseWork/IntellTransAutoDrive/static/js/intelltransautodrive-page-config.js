@@ -100,7 +100,7 @@ const intelltransautodrivePageConfig = {
       videos: [
         {
           title: 'Multi-Agent DQN-Attention',
-          image: './resource/video/intersection-marl.gif',
+          image: './resource/video/intersection_marl.gif',
           alt: 'Intersection 环境多智能体强化学习可视化结果'
         }
       ],

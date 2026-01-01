@@ -416,19 +416,26 @@ const PageRenderer = {
       algorithmsHTML = config.algorithms.map(alg => {
         const algorithmConfigStr = JSON.stringify(alg.algorithmConfig || {});
         const containerId = alg.algorithmConfig?.containerId || `algorithm-${Math.random().toString(36).substr(2, 9)}`;
+        const collapseId = `collapse-${containerId}`;
+        const toggleId = `toggle-${containerId}`;
         return `
           <div style="margin-bottom: 3rem;">
-            <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; background: var(--subsection-bg, #e9ecef); border-radius: 4px;">
-              <h3 class="title is-4 has-text-centered" style="color: var(--text-primary, #2c3e50); margin-bottom: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <div style="margin-bottom: 1.5rem; padding: 0.75rem 1rem; background: var(--subsection-bg, #e9ecef); border-radius: 4px; cursor: pointer;" onclick="toggleAlgorithmCollapse('${collapseId}', '${toggleId}')">
+              <h3 class="title is-4 has-text-centered" style="color: var(--text-primary, #2c3e50); margin-bottom: 0; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 0.5rem; position: relative;">
                 <span class="icon" style="font-size: 1rem; color: #667eea;">
                   <i class="fas fa-code"></i>
                 </span>
                 <span>${alg.title || '算法'}</span>
+                <span class="icon" style="font-size: 0.875rem; color: var(--text-primary, #2c3e50); position: absolute; right: 1rem;">
+                  <i class="fas fa-chevron-down" id="${toggleId}"></i>
+                </span>
               </h3>
             </div>
-            <div class="algorithm-container" id="${containerId}" data-algorithm-config='${algorithmConfigStr}'>
-              <div class="has-text-centered" style="padding: 2rem;">
-                <p>正在加载算法数据...</p>
+            <div class="algorithm-collapse-content" id="${collapseId}" style="display: none;">
+              <div class="algorithm-container" id="${containerId}" data-algorithm-config='${algorithmConfigStr}'>
+                <div class="has-text-centered" style="padding: 2rem;">
+                  <p>正在加载算法数据...</p>
+                </div>
               </div>
             </div>
           </div>
@@ -573,4 +580,30 @@ const PageRenderer = {
     }
   }
 };
+
+/**
+ * 切换算法折叠/展开状态
+ * @param {string} collapseId - 折叠容器的ID
+ * @param {string} toggleId - 切换图标的ID
+ */
+function toggleAlgorithmCollapse(collapseId, toggleId) {
+  const collapseElement = document.getElementById(collapseId);
+  const toggleIcon = document.getElementById(toggleId);
+  
+  if (!collapseElement || !toggleIcon) return;
+  
+  const isCollapsed = collapseElement.style.display === 'none';
+  
+  if (isCollapsed) {
+    // 展开
+    collapseElement.style.display = 'block';
+    toggleIcon.classList.remove('fa-chevron-down');
+    toggleIcon.classList.add('fa-chevron-up');
+  } else {
+    // 折叠
+    collapseElement.style.display = 'none';
+    toggleIcon.classList.remove('fa-chevron-up');
+    toggleIcon.classList.add('fa-chevron-down');
+  }
+}
 
